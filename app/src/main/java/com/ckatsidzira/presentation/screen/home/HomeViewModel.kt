@@ -1,4 +1,4 @@
-package com.ckatsidzira.presentation.section.home
+package com.ckatsidzira.presentation.screen.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

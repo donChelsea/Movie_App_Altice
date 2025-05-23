@@ -7,11 +7,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.ckatsidzira.presentation.section.home.ui.HomeScreen
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.createGraph
+import androidx.navigation.navArgument
+import com.ckatsidzira.presentation.navigation.BottomNavigationBar
+import com.ckatsidzira.presentation.navigation.Screen
+import com.ckatsidzira.presentation.navigation.Screen.DetailArgs.ID
+import com.ckatsidzira.presentation.screen.favorites.ui.FavoritesScreen
+import com.ckatsidzira.presentation.screen.home.ui.HomeScreen
 import com.ckatsidzira.ui.theme.Movie_App_AlticeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,26 +29,39 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Movie_App_AlticeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomeScreen(modifier = Modifier.padding(innerPadding))
+                val navController = rememberNavController()
+
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = { BottomNavigationBar(navController) }
+                ) { innerPadding ->
+                    val graph =
+                        navController.createGraph(startDestination = Screen.Home.route) {
+                            composable(route = Screen.Home.route) {
+                                HomeScreen()
+                            }
+                            composable(route = Screen.Favorites.route) {
+                                FavoritesScreen()
+                            }
+                            composable(
+                                route = Screen.Details.route + "/{$ID}",
+                                arguments = listOf(
+                                    navArgument(ID) {
+                                        type = NavType.StringType
+                                    }
+                                )
+                            ) {
+                            }
+                        }
+
+                    NavHost(
+                        navController = navController,
+                        graph = graph,
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Movie_App_AlticeTheme {
-        Greeting("Android")
-    }
-}

@@ -1,4 +1,4 @@
-package com.ckatsidzira.presentation.section.home
+package com.ckatsidzira.presentation.screen.home
 
 import androidx.compose.runtime.Immutable
 import com.ckatsidzira.presentation.model.MovieUiModel

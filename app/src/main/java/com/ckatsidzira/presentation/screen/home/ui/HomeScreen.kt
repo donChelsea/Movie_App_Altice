@@ -1,4 +1,4 @@
-package com.ckatsidzira.presentation.section.home.ui
+package com.ckatsidzira.presentation.screen.home.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,10 +13,10 @@ import com.ckatsidzira.presentation.custom.states.ShowError
 import com.ckatsidzira.presentation.custom.states.ShowLoading
 import com.ckatsidzira.presentation.custom.states.ShowOffline
 import com.ckatsidzira.presentation.model.MovieUiModel
-import com.ckatsidzira.presentation.section.home.HomeUiAction
-import com.ckatsidzira.presentation.section.home.HomeUiState
-import com.ckatsidzira.presentation.section.home.HomeViewModel
-import com.ckatsidzira.presentation.section.home.ScreenData
+import com.ckatsidzira.presentation.screen.home.HomeUiAction
+import com.ckatsidzira.presentation.screen.home.HomeUiState
+import com.ckatsidzira.presentation.screen.home.HomeViewModel
+import com.ckatsidzira.presentation.screen.home.ScreenData
 
 @Composable
 fun HomeScreen(
