@@ -1,6 +1,7 @@
 package com.ckatsidzira.presentation.screen.home
 
 import androidx.compose.runtime.Immutable
+import com.ckatsidzira.domain.model.TimeWindow
 import com.ckatsidzira.presentation.model.MovieUiModel
 
 @Immutable
@@ -18,6 +19,8 @@ sealed class HomeUiEvent {
 sealed class HomeUiAction {
     @Immutable
     data class OnMovieClicked(val id: Int): HomeUiAction()
+    @Immutable
+    data class OnTimeWindowChanged(val timeWindow: String, val timeWindowIndex: Int): HomeUiAction()
 }
 
 @Immutable
@@ -32,5 +35,7 @@ sealed class ScreenData {
     @Immutable
     data class Data(
         val items: List<MovieUiModel> = emptyList(),
+        val selectedTimeWindowIndex: Int = 0,
+        val timeWindow: String = TimeWindow.DAY.name.lowercase()
     ) : ScreenData()
 }

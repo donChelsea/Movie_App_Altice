@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ckatsidzira.presentation.custom.ScreenSection
 import com.ckatsidzira.presentation.custom.states.ShowError
 import com.ckatsidzira.presentation.custom.states.ShowLoading
 import com.ckatsidzira.presentation.custom.states.ShowOffline
@@ -45,9 +46,11 @@ fun HomeLayout(
         is ScreenData.Error -> ShowError(
             message = state.screenData.message
         )
+
         is ScreenData.Data -> HomeContent(
             modifier = modifier,
             movies = state.screenData.items,
+            selectedDayIndex = state.screenData.selectedTimeWindowIndex,
             onAction = onAction,
         )
     }
@@ -57,11 +60,20 @@ fun HomeLayout(
 fun HomeContent(
     modifier: Modifier = Modifier,
     movies: List<MovieUiModel>,
+    selectedDayIndex: Int,
     onAction: (HomeUiAction) -> Unit,
 ) {
     Column(
         modifier = modifier,
     ) {
+        ScreenSection(
+            title = "Trending",
+            defaultSelectedItemIndex = selectedDayIndex,
+            onSelectedChanged = { name, index ->
+                onAction(HomeUiAction.OnTimeWindowChanged(name, index))
+            }
+        )
+
         LazyColumn {
             items(items = movies) { movie ->
                 Text(text = movie.title)

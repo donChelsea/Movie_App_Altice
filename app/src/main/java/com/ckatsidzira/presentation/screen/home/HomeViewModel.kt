@@ -40,11 +40,17 @@ class HomeViewModel @Inject constructor(
                     HomeUiEvent.OnMovieClicked(id = action.id)
                 )
             }
+
+            is HomeUiAction.OnTimeWindowChanged -> getData(
+                timeWindow = action.timeWindow,
+                selectedTimeWindowIndex = action.timeWindowIndex
+            )
         }
     }
 
     private fun getData(
-        timeWindow: String = TimeWindow.DAY.value
+        timeWindow: String = TimeWindow.DAY.name.lowercase(),
+        selectedTimeWindowIndex: Int = 0,
     ) {
         viewModelScope.launch {
             repository.getTrendingFlow(
@@ -64,6 +70,8 @@ class HomeViewModel @Inject constructor(
                     is Resource.Success -> result.data?.let { movies ->
                         updateState(
                             screenData = ScreenData.Data(
+                                selectedTimeWindowIndex = selectedTimeWindowIndex,
+                                timeWindow = timeWindow,
                                 items = movies.map { it.toUiModel() }
                             )
                         )
