@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.ckatsidzira.presentation.custom.ScreenSection
-import com.ckatsidzira.presentation.custom.states.ShowError
-import com.ckatsidzira.presentation.custom.states.ShowLoading
-import com.ckatsidzira.presentation.custom.states.ShowOffline
+import com.ckatsidzira.presentation.custom.section.ScreenSection
+import com.ckatsidzira.presentation.custom.state.ShowError
+import com.ckatsidzira.presentation.custom.state.ShowLoading
+import com.ckatsidzira.presentation.custom.state.ShowOffline
 import com.ckatsidzira.presentation.model.MovieUiModel
 import com.ckatsidzira.presentation.navigation.Screen
 import com.ckatsidzira.presentation.screen.home.HomeUiAction

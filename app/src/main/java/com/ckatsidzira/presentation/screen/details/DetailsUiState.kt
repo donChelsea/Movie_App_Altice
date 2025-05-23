@@ -1,7 +1,7 @@
 package com.ckatsidzira.presentation.screen.details
 
 import androidx.compose.runtime.Immutable
-import com.ckatsidzira.presentation.custom.FavoriteState
+import com.ckatsidzira.presentation.custom.favorite.FavoriteState
 import com.ckatsidzira.presentation.model.MovieUiModel
 
 @Immutable

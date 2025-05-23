@@ -3,7 +3,7 @@ package com.ckatsidzira.presentation.screen.details
 import androidx.lifecycle.SavedStateHandle
 import com.ckatsidzira.domain.repository.MovieRepository
 import com.ckatsidzira.domain.util.Resource
-import com.ckatsidzira.presentation.custom.FavoriteState
+import com.ckatsidzira.presentation.custom.favorite.FavoriteState
 import com.ckatsidzira.presentation.navigation.Screen.DetailArgs.ID
 import com.ckatsidzira.presentation.util.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -15,19 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ckatsidzira.presentation.custom.FavoriteButton
-import com.ckatsidzira.presentation.custom.FavoriteState
-import com.ckatsidzira.presentation.custom.states.ShowError
-import com.ckatsidzira.presentation.custom.states.ShowLoading
-import com.ckatsidzira.presentation.custom.states.ShowOffline
+import com.ckatsidzira.presentation.custom.favorite.FavoriteButton
+import com.ckatsidzira.presentation.custom.favorite.FavoriteState
+import com.ckatsidzira.presentation.custom.state.ShowError
+import com.ckatsidzira.presentation.custom.state.ShowLoading
+import com.ckatsidzira.presentation.custom.state.ShowOffline
 import com.ckatsidzira.presentation.model.MovieUiModel
 import com.ckatsidzira.presentation.screen.details.DetailsUiAction
 import com.ckatsidzira.presentation.screen.details.DetailsUiState
 import com.ckatsidzira.presentation.screen.details.DetailsViewModel
 import com.ckatsidzira.presentation.screen.details.ScreenData
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun DetailsScreen(
