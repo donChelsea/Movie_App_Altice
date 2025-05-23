@@ -4,8 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.ckatsidzira.BuildConfig
 import com.ckatsidzira.data.repository.MovieRepositoryImpl
-import com.ckatsidzira.data.source.local.cache.CacheDao
-import com.ckatsidzira.data.source.local.cache.CacheDatabase
+import com.ckatsidzira.data.source.local.dao.CacheDao
+import com.ckatsidzira.data.source.local.MovieDatabase
+import com.ckatsidzira.data.source.local.dao.FavoritesDao
 import com.ckatsidzira.data.source.remote.MovieApi
 import com.ckatsidzira.data.source.remote.interceptor.ApiKeyInterceptor
 import com.ckatsidzira.domain.repository.MovieRepository
@@ -50,22 +51,25 @@ object DataModule {
     @Singleton
     fun provideMovieRepository(
         api: MovieApi,
-        cache: CacheDatabase
+        cache: MovieDatabase
     ): MovieRepository =
         MovieRepositoryImpl(api, cache)
 
     @Provides
     @Singleton
-    fun provideCacheDatabase(@ApplicationContext context: Context): CacheDatabase {
+    fun provideMovieDatabase(@ApplicationContext context: Context): MovieDatabase {
         return Room.databaseBuilder(
             context,
-            CacheDatabase::class.java,
-            "cache.db"
+            MovieDatabase::class.java,
+            "movies.db"
         )
             .fallbackToDestructiveMigration(true)
             .build()
     }
 
     @Provides
-    fun provideCacheDao(cache: CacheDatabase): CacheDao = cache.dao
+    fun provideCacheDao(db: MovieDatabase): CacheDao = db.cacheDao
+
+    @Provides
+    fun provideFavoritesDao(db: MovieDatabase): FavoritesDao = db.favoritesDao
 }

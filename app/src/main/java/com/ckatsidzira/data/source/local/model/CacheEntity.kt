@@ -1,4 +1,4 @@
-package com.ckatsidzira.data.source.local.cache.model
+package com.ckatsidzira.data.source.local.model
 
 import androidx.room.Entity
 import com.ckatsidzira.domain.model.Movie
@@ -7,7 +7,7 @@ import com.ckatsidzira.domain.model.Movie
     tableName = "cache",
     primaryKeys = ["id", "timeWindow"]
 )
-data class MovieEntity(
+data class CacheEntity(
     val id: Int,
     val title: String,
     val posterPath: String,

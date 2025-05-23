@@ -2,6 +2,7 @@ package com.ckatsidzira.presentation.screen.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ckatsidzira.domain.model.Movie
 import com.ckatsidzira.domain.model.TimeWindow
 import com.ckatsidzira.domain.repository.MovieRepository
 import com.ckatsidzira.domain.util.Resource
@@ -30,7 +31,8 @@ class HomeViewModel @Inject constructor(
     val events: SharedFlow<HomeUiEvent> = _events.asSharedFlow()
 
     init {
-        getData()
+        loadTrending()
+        loadFavorites()
     }
 
     fun handleAction(action: HomeUiAction) {
@@ -41,25 +43,30 @@ class HomeViewModel @Inject constructor(
                 )
             }
 
-            is HomeUiAction.OnTimeWindowChanged -> getData(
+            is HomeUiAction.OnTimeWindowChanged -> loadTrending(
                 timeWindow = action.timeWindow,
                 selectedTimeWindowIndex = action.timeWindowIndex
             )
+
+            is HomeUiAction.OnAddToFavorites -> {
+                println(action.movie)
+                toggleFavorite(movie = action.movie.toDomain())
+            }
         }
     }
 
-    private fun getData(
+    private fun loadTrending(
         timeWindow: String = TimeWindow.DAY.name.lowercase(),
         selectedTimeWindowIndex: Int = 0,
     ) {
         viewModelScope.launch {
             repository.getTrendingFlow(
                 timeWindow = timeWindow
-            ).collectLatest { result ->
-                when (result) {
+            ).collectLatest { resource ->
+                when (resource) {
                     is Resource.Error -> updateState(
                         screenData = ScreenData.Error(
-                            message = result.message ?: "Error occurred while getting data."
+                            message = resource.message ?: "Error occurred while getting data."
                         )
                     )
 
@@ -67,12 +74,12 @@ class HomeViewModel @Inject constructor(
                         screenData = ScreenData.Loading
                     )
 
-                    is Resource.Success -> result.data?.let { movies ->
+                    is Resource.Success -> resource.data?.let { movies ->
                         updateState(
                             screenData = ScreenData.Data(
                                 selectedTimeWindowIndex = selectedTimeWindowIndex,
                                 timeWindow = timeWindow,
-                                items = movies.map { it.toUiModel() }
+                                trending = movies.map { it.toUiModel() }
                             )
                         )
                     }
@@ -85,5 +92,52 @@ class HomeViewModel @Inject constructor(
         screenData: ScreenData = _state.value.screenData
     ) = _state.update { oldState ->
         oldState.copy(screenData = screenData)
+    }
+
+    private fun loadFavorites() {
+        viewModelScope.launch {
+            repository.getFavoritesFlow()
+                .collectLatest { resource ->
+                    if (resource is Resource.Success) {
+                        val currentScreenData = _state.value.screenData
+                        if (currentScreenData is ScreenData.Data) {
+                            println(resource.data.toString())
+                            updateState(
+                                screenData = currentScreenData.copy(
+                                    favorites = resource.data.orEmpty().map { it.toUiModel() }
+                                )
+                            )
+                        }
+                    }
+                }
+        }
+    }
+
+
+    private fun toggleFavorite(movie: Movie) {
+        viewModelScope.launch {
+            val currentScreenData = _state.value.screenData
+            if (currentScreenData is ScreenData.Data) {
+                val isCurrentlyFavorite = repository.isFavorite(movie.id)
+                if (isCurrentlyFavorite) {
+                    repository.removeFromFavorites(movie)
+                } else {
+                    repository.addToFavorites(movie)
+                }
+
+                val updatedFavoriteMovies = currentScreenData.favorites.toMutableList()
+                if (isCurrentlyFavorite) {
+                    updatedFavoriteMovies.removeAll { it.id == movie.id }
+                } else {
+                    updatedFavoriteMovies.add(movie.toUiModel())
+                }
+
+                updateState(
+                    screenData = currentScreenData.copy(
+                        favorites = updatedFavoriteMovies
+                    )
+                )
+            }
+        }
     }
 }
