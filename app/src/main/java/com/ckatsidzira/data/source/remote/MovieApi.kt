@@ -4,7 +4,6 @@ import com.ckatsidzira.data.source.remote.model.ApiResponseDto
 import com.ckatsidzira.data.source.remote.model.MovieDto
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface MovieApi {
 
@@ -12,4 +11,9 @@ interface MovieApi {
     suspend fun getTrendingMovies(
         @Path("timeWindow") timeWindow: String,
     ): ApiResponseDto<MovieDto>
+
+    @GET("movie/{id}")
+    suspend fun getMovieDetails(
+        @Path("id") id: Int,
+    ): MovieDto
 }

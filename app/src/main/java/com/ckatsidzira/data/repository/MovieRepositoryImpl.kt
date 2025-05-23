@@ -5,6 +5,7 @@ import com.ckatsidzira.data.source.remote.MovieApi
 import com.ckatsidzira.domain.model.Movie
 import com.ckatsidzira.domain.repository.MovieRepository
 import com.ckatsidzira.domain.util.Resource
+import com.ckatsidzira.domain.util.safeCall
 import com.ckatsidzira.domain.util.safeFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -49,4 +50,8 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun removeFromFavorites(movie: Movie) = favoritesDao.removeFromFavorites(movie.toFavoritesEntity())
 
     override suspend fun isFavorite(id: Int) = favoritesDao.isFavorite(id)
+
+    override suspend fun getMovieDetails(id: Int): Resource<Movie> = safeCall {
+        api.getMovieDetails(id).toDomain()
+    }
 }

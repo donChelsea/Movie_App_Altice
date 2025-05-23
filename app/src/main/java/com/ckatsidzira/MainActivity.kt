@@ -17,6 +17,7 @@ import androidx.navigation.navArgument
 import com.ckatsidzira.presentation.navigation.BottomNavigationBar
 import com.ckatsidzira.presentation.navigation.Screen
 import com.ckatsidzira.presentation.navigation.Screen.DetailArgs.ID
+import com.ckatsidzira.presentation.screen.details.ui.DetailsScreen
 import com.ckatsidzira.presentation.screen.favorites.ui.FavoritesScreen
 import com.ckatsidzira.presentation.screen.home.ui.HomeScreen
 import com.ckatsidzira.ui.theme.Movie_App_AlticeTheme
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     val graph =
                         navController.createGraph(startDestination = Screen.Home.route) {
                             composable(route = Screen.Home.route) {
-                                HomeScreen()
+                                HomeScreen(navController = navController)
                             }
                             composable(route = Screen.Favorites.route) {
                                 FavoritesScreen()
@@ -47,10 +48,11 @@ class MainActivity : ComponentActivity() {
                                 route = Screen.Details.route + "/{$ID}",
                                 arguments = listOf(
                                     navArgument(ID) {
-                                        type = NavType.StringType
+                                        type = NavType.IntType
                                     }
                                 )
                             ) {
+                                DetailsScreen()
                             }
                         }
 

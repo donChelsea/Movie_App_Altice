@@ -1,6 +1,7 @@
 package com.ckatsidzira.data.source.remote.model
 
 import com.ckatsidzira.data.source.local.model.CacheEntity
+import com.ckatsidzira.domain.model.Movie
 import com.google.gson.annotations.SerializedName
 
 data class MovieDto(
@@ -14,5 +15,10 @@ data class MovieDto(
         title = title,
         id = id,
         timeWindow = timeWindow,
+    )
+    fun toDomain() = Movie(
+        posterPath = posterPath,
+        title = title,
+        id = id,
     )
 }

@@ -16,3 +16,11 @@ inline fun <T> safeFlow(crossinline block: suspend () -> T): Flow<Resource<T>> =
 }.catch { e ->
     emit(Resource.Error(message = e.localizedMessage ?: "An error occurred"))
 }
+
+suspend inline fun <T> safeCall(crossinline block: suspend () -> T): Resource<T> {
+    return try {
+        Resource.Success(block())
+    } catch (e: Exception) {
+        Resource.Error(e.localizedMessage ?: "An error occurred")
+    }
+}

@@ -18,7 +18,10 @@ fun FavoritesScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    FavoritesContent(favorites = state.favorites)
+    FavoritesContent(
+        modifier = modifier,
+        favorites = state.favorites
+    )
 }
 
 @Composable
