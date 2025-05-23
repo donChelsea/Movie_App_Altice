@@ -1,7 +1,6 @@
 package com.ckatsidzira.presentation.screen.home
 
 import androidx.compose.runtime.Immutable
-import com.ckatsidzira.domain.model.Movie
 import com.ckatsidzira.domain.model.TimeWindow
 import com.ckatsidzira.presentation.model.MovieUiModel
 
