@@ -11,11 +11,13 @@ data class CacheEntity(
     val id: Int,
     val title: String,
     val posterPath: String,
+    val overview: String,
     val timeWindow: String,
 ) {
     fun toDomain() = Movie(
         id = id,
         title = title,
+        overview = overview,
         posterPath = posterPath
     )
 }

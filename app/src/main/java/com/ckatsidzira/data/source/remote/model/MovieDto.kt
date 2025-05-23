@@ -8,17 +8,20 @@ data class MovieDto(
     @SerializedName("poster_path")
     val posterPath: String,
     val title: String,
+    val overview: String,
     val id: Int,
 ) {
     fun toCacheEntity(timeWindow: String) = CacheEntity(
         posterPath = posterPath,
         title = title,
         id = id,
+        overview = overview,
         timeWindow = timeWindow,
     )
     fun toDomain() = Movie(
         posterPath = posterPath,
         title = title,
+        overview = overview,
         id = id,
     )
 }

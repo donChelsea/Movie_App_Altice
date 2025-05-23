@@ -9,7 +9,7 @@ import com.ckatsidzira.data.source.local.model.FavoritesEntity
 
 @Database(
     entities = [CacheEntity::class, FavoritesEntity::class],
-    version = 4
+    version = 5
 )
 abstract class MovieDatabase : RoomDatabase() {
     abstract val cacheDao: CacheDao

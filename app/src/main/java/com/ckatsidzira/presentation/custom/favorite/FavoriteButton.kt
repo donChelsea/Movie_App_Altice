@@ -2,10 +2,7 @@ package com.ckatsidzira.presentation.custom.favorite
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.BookmarkAdd
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -40,13 +37,13 @@ fun FavoriteButton(
                     color = Color.White
                 )
 
-                FavoriteState.Favorited -> Icon(
+                FavoriteState.Favorite -> Icon(
                     imageVector = Icons.Filled.Favorite,
                     contentDescription = "",
                     tint = Color.White
                 )
 
-                FavoriteState.NotFavorited -> Icon(
+                FavoriteState.NotFavorite -> Icon(
                     imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = "",
                     tint = Color.White
@@ -58,7 +55,7 @@ fun FavoriteButton(
 
 @Immutable
 sealed interface FavoriteState {
-    data object Favorited : FavoriteState
-    data object NotFavorited : FavoriteState
+    data object Favorite : FavoriteState
+    data object NotFavorite : FavoriteState
     data object Toggling : FavoriteState
 }

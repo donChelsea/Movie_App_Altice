@@ -1,7 +1,18 @@
 package com.ckatsidzira.presentation.screen.details.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -11,9 +22,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.ckatsidzira.BuildConfig
+import com.ckatsidzira.R
 import com.ckatsidzira.presentation.custom.favorite.FavoriteButton
 import com.ckatsidzira.presentation.custom.favorite.FavoriteState
 import com.ckatsidzira.presentation.custom.state.ShowError
@@ -69,7 +89,7 @@ fun DetailsContent(
     favoriteState: FavoriteState,
     onAction: (DetailsUiAction) -> Unit,
 ) {
-    var isFavorited by rememberSaveable { mutableStateOf(favoriteState == FavoriteState.Favorited) }
+    var isFavorited by rememberSaveable { mutableStateOf(favoriteState == FavoriteState.Favorite) }
     var toggling by rememberSaveable { mutableStateOf(false) }
     val favoriteUpdate = remember {
         { movie: MovieUiModel, favorited: Boolean ->
@@ -82,24 +102,64 @@ fun DetailsContent(
         }
     }
 
-    Column(modifier = modifier) {
-        Text(text = movie.title)
-
-        FavoriteButton(
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .background(MaterialTheme.colorScheme.background)
+            .padding(16.dp)
+    ) {
+        Box(
             modifier = Modifier
-                .align(Alignment.End)
-                .padding(8.dp),
-            state = when {
-                toggling -> FavoriteState.Toggling
-                isFavorited -> FavoriteState.Favorited
-                else -> FavoriteState.NotFavorited
-            },
-            onFavoriteClicked = {
-                toggling = true
-                favoriteUpdate(movie, isFavorited)
-                toggling = false
-                isFavorited = !isFavorited
-            }
+                .fillMaxWidth()
+                .aspectRatio(2f / 3f)
+                .clip(RoundedCornerShape(12.dp))
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(BuildConfig.IMAGES_BASE_URL + movie.posterPath)
+                    .crossfade(true)
+                    .build(),
+                placeholder = painterResource(R.drawable.ic_launcher_foreground),
+                contentDescription = movie.title,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .matchParentSize()
+            )
+
+            FavoriteButton(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(12.dp),
+                state = when {
+                    toggling -> FavoriteState.Toggling
+                    isFavorited -> FavoriteState.Favorite
+                    else -> FavoriteState.NotFavorite
+                },
+                onFavoriteClicked = {
+                    toggling = true
+                    favoriteUpdate(movie, isFavorited)
+                    toggling = false
+                    isFavorited = !isFavorited
+                }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = movie.title,
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = movie.overview,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+            lineHeight = 22.sp
         )
     }
 }

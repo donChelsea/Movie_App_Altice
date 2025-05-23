@@ -26,7 +26,7 @@ class DetailsViewModel @Inject constructor(
         get() = _state.asStateFlow()
 
     private val movieId: Int = savedStateHandle[ID] ?: throw Exception("Must have movie id")
-    private var favoritedState: FavoriteState = FavoriteState.NotFavorited
+    private var favoriteState: FavoriteState = FavoriteState.NotFavorite
 
     init {
         loadMovie()
@@ -38,17 +38,17 @@ class DetailsViewModel @Inject constructor(
                 safeLaunch {
                     if (action.isFavorited) {
                         repository.removeFromFavorites(action.movie.toDomain())
-                        favoritedState = FavoriteState.NotFavorited
+                        favoriteState = FavoriteState.NotFavorite
                         updateState(ScreenData.Data(
                             movie = action.movie,
-                            favoriteState = favoritedState
+                            favoriteState = favoriteState
                         ))
                     } else {
                         repository.addToFavorites(action.movie.toDomain())
-                        favoritedState = FavoriteState.Favorited
+                        favoriteState = FavoriteState.Favorite
                         updateState(ScreenData.Data(
                             movie = action.movie,
-                            favoriteState = favoritedState
+                            favoriteState = favoriteState
                         ))
                     }
                 }
@@ -74,13 +74,13 @@ class DetailsViewModel @Inject constructor(
                 is Resource.Success -> details.data?.let { movie ->
                     favorites.forEach { savedMovie ->
                         if (savedMovie.id == movieId) {
-                            favoritedState = FavoriteState.Favorited
+                            favoriteState = FavoriteState.Favorite
                         }
                     }
                     updateState(
                         ScreenData.Data(
                             movie = movie.toUiModel(),
-                            favoriteState = favoritedState,
+                            favoriteState = favoriteState,
                         )
                     )
                 }

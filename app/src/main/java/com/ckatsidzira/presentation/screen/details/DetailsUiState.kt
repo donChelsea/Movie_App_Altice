@@ -32,6 +32,6 @@ sealed class ScreenData {
     @Immutable
     data class Data(
         val movie: MovieUiModel = MovieUiModel(),
-        val favoriteState: FavoriteState = FavoriteState.NotFavorited,
+        val favoriteState: FavoriteState = FavoriteState.NotFavorite,
     ) : ScreenData()
 }

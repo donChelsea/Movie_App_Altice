@@ -8,11 +8,13 @@ data class FavoritesEntity(
     @PrimaryKey
     val id: Int,
     val title: String,
+    val overview: String,
     val posterPath: String,
 ) {
     fun toDomain() = Movie(
         id = id,
         title = title,
+        overview = overview,
         posterPath = posterPath,
     )
 }
