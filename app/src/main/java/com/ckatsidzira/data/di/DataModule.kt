@@ -67,5 +67,5 @@ object DataModule {
     }
 
     @Provides
-    fun provideMovieDao(cache: CacheDatabase): CacheDao = cache.dao
+    fun provideCacheDao(cache: CacheDatabase): CacheDao = cache.dao
 }

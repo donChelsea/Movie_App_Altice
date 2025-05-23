@@ -1,5 +1,5 @@
 package com.ckatsidzira.domain.model
 
-enum class TimeWindow {
-    DAY, WEEK
+enum class TimeWindow(val value: String) {
+    DAY("day"), WEEK("week")
 }

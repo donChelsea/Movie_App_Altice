@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 data class MovieUiModel(
-    val id: Int,
-    val title: String,
-    val posterPath: String,
+    val id: Int = 0,
+    val title: String = "",
+    val posterPath: String = "",
 )

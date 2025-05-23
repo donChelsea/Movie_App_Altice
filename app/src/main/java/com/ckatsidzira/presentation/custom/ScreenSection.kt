@@ -48,8 +48,8 @@ fun ScreenSection(
 
         FilterChipGroup(
             items = listOf(
-                TimeWindow.DAY.name,
-                TimeWindow.WEEK.name,
+                TimeWindow.DAY,
+                TimeWindow.WEEK,
             ),
             defaultSelectedItemIndex = defaultSelectedItemIndex,
             onSelectedChanged = { name, index -> onSelectedChanged(name, index) }
@@ -60,7 +60,7 @@ fun ScreenSection(
 @Composable
 fun FilterChipGroup(
     modifier: Modifier = Modifier,
-    items: List<String>,
+    items: List<TimeWindow>,
     defaultSelectedItemIndex: Int = 0,
     onSelectedChanged: (String, Int) -> Unit = { name, index -> }
 ) {
@@ -73,9 +73,9 @@ fun FilterChipGroup(
                 modifier = Modifier.padding(end = 6.dp),
                 selected = items[defaultSelectedItemIndex] == items[index],
                 onClick = {
-                    onSelectedChanged(items[index].lowercase(), index)
+                    onSelectedChanged(items[index].value, index)
                 },
-                label = { Text(items[index].toRegularCase()) },
+                label = { Text(items[index].name.toRegularCase()) },
                 leadingIcon = if (items[defaultSelectedItemIndex] == items[index]) {
                     {
                         Icon(

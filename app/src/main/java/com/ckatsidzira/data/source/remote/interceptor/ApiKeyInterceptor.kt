@@ -10,7 +10,7 @@ class ApiKeyInterceptor : Interceptor {
         val originalUrl = originalRequest.url
 
         val newUrl = originalUrl.newBuilder()
-            .addQueryParameter("api_key", BuildConfig.API_KEY)
+            .addQueryParameter(API_KEY, BuildConfig.API_KEY)
             .build()
 
         val newRequest = originalRequest.newBuilder()
@@ -18,5 +18,9 @@ class ApiKeyInterceptor : Interceptor {
             .build()
 
         return chain.proceed(newRequest)
+    }
+
+    companion object {
+        private const val API_KEY = "api_key"
     }
 }
