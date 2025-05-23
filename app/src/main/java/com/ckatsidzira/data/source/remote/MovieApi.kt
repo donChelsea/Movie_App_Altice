@@ -11,6 +11,5 @@ interface MovieApi {
     @GET("trending/movie/{timeWindow}")
     suspend fun getTrendingMovies(
         @Path("timeWindow") timeWindow: String,
-        @Query("page") page: Int,
     ): ApiResponseDto<MovieDto>
 }

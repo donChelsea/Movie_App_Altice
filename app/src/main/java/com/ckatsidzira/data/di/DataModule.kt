@@ -1,13 +1,18 @@
 package com.ckatsidzira.data.di
 
+import android.content.Context
+import androidx.room.Room
 import com.ckatsidzira.BuildConfig
 import com.ckatsidzira.data.repository.MovieRepositoryImpl
+import com.ckatsidzira.data.source.local.cache.CacheDao
+import com.ckatsidzira.data.source.local.cache.CacheDatabase
 import com.ckatsidzira.data.source.remote.MovieApi
 import com.ckatsidzira.data.source.remote.interceptor.ApiKeyInterceptor
 import com.ckatsidzira.domain.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,31 +49,23 @@ object DataModule {
     @Provides
     @Singleton
     fun provideMovieRepository(
-        api: MovieApi
+        api: MovieApi,
+        cache: CacheDatabase
     ): MovieRepository =
-        MovieRepositoryImpl(api)
+        MovieRepositoryImpl(api, cache)
 
-//
-//    @Provides
-//    @Singleton
-//    fun provideMovieDatabase(
-//        @ApplicationContext context: Context,
-//    ): MovieDatabase =
-//        Room.databaseBuilder(
-//            context,
-//            MovieDatabase::class.java,
-//            "movie_database"
-//        ).build()
-//
-//    @Provides
-//    @Singleton
-//    fun provideMovieDao(
-//        database: MovieDatabase
-//    ): MovieDao = database.dao()
-//
-//    @Provides
-//    @Singleton
-//    fun provideConnectionManager(
-//        @ApplicationContext context: Context,
-//    ): ConnectionManager = ConnectionManager(context)
+    @Provides
+    @Singleton
+    fun provideCacheDatabase(@ApplicationContext context: Context): CacheDatabase {
+        return Room.databaseBuilder(
+            context,
+            CacheDatabase::class.java,
+            "cache.db"
+        )
+            .fallbackToDestructiveMigration(true)
+            .build()
+    }
+
+    @Provides
+    fun provideMovieDao(cache: CacheDatabase): CacheDao = cache.dao
 }
