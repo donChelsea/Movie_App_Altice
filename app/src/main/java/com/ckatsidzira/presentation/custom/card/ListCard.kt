@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,15 +40,15 @@ import com.ckatsidzira.presentation.util.MOCK_MOVIE
 @Composable
 fun ListCard(
     movie: MovieUiModel,
-    onClick: (Int) -> Unit,
-    onDelete: (MovieUiModel) -> Unit,
+    onMovieClicked: (Int) -> Unit,
+    onDeleteClicked: (MovieUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { onClick(movie.id) },
+            .clickable { onMovieClicked(movie.id) },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         shape = RoundedCornerShape(12.dp)
@@ -105,7 +103,7 @@ fun ListCard(
             }
 
             IconButton(
-                onClick = { onDelete(movie) },
+                onClick = { onDeleteClicked(movie) },
                 modifier = Modifier.align(Alignment.Top)
             ) {
                 Icon(
@@ -124,8 +122,8 @@ fun ListCard(
 fun PreviewListCard() {
     ListCard(
         movie = MOCK_MOVIE,
-        onClick = { },
-        onDelete = { },
+        onMovieClicked = { },
+        onDeleteClicked = { },
     )
 }
 

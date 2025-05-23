@@ -7,6 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -17,6 +21,7 @@ import androidx.navigation.navArgument
 import com.ckatsidzira.presentation.navigation.BottomNavigationBar
 import com.ckatsidzira.presentation.navigation.Screen
 import com.ckatsidzira.presentation.navigation.Screen.DetailArgs.ID
+import com.ckatsidzira.presentation.navigation.TopNavigationBar
 import com.ckatsidzira.presentation.screen.details.ui.DetailsScreen
 import com.ckatsidzira.presentation.screen.favorites.ui.FavoritesScreen
 import com.ckatsidzira.presentation.screen.home.ui.HomeScreen
@@ -31,18 +36,28 @@ class MainActivity : ComponentActivity() {
         setContent {
             Movie_App_AlticeTheme {
                 val navController = rememberNavController()
+                var title by remember { mutableStateOf("") }
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        TopNavigationBar(
+                            title = title,
+                            showBackButton = title == Screen.Details.route,
+                            onBackClick = { navController.popBackStack() }
+                        )
+                    },
                     bottomBar = { BottomNavigationBar(navController) }
                 ) { innerPadding ->
                     val graph =
                         navController.createGraph(startDestination = Screen.Home.route) {
                             composable(route = Screen.Home.route) {
                                 HomeScreen(navController = navController)
+                                title = Screen.Home.route
                             }
                             composable(route = Screen.Favorites.route) {
-                                FavoritesScreen()
+                                FavoritesScreen(navController = navController)
+                                title = Screen.Favorites.route
                             }
                             composable(
                                 route = Screen.Details.route + "/{$ID}",
@@ -53,6 +68,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             ) {
                                 DetailsScreen()
+                                title = Screen.Details.route
                             }
                         }
 
