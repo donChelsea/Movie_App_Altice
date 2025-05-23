@@ -22,8 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ckatsidzira.R
 import kotlinx.coroutines.delay
 
 @Preview
@@ -63,7 +65,7 @@ fun ProgressAnimation() {
         dys.forEachIndexed { index, dy ->
             Box(
                 Modifier
-                    .size(25.dp)
+                    .size(dimensionResource(R.dimen.size_25))
                     .graphicsLayer {
                         translationY = -dy * travelDistance
                     },
@@ -79,7 +81,7 @@ fun ProgressAnimation() {
             }
 
             if (index != dys.size - 1) {
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.padding_10)))
             }
         }
     }

@@ -14,7 +14,8 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
+import com.ckatsidzira.R
 
 @Composable
 fun FavoriteButton(
@@ -28,12 +29,12 @@ fun FavoriteButton(
         modifier = modifier,
         onClick = { favoriteUpdate() },
         containerColor = MaterialTheme.colorScheme.primary,
-        elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 10.dp),
+        elevation = FloatingActionButtonDefaults.elevation(defaultElevation = dimensionResource(R.dimen.padding_10)),
         content = {
             when (state) {
                 FavoriteState.Toggling -> CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
-                    strokeWidth = 2.dp,
+                    modifier = Modifier.size(dimensionResource(R.dimen.padding_24)),
+                    strokeWidth = dimensionResource(R.dimen.border_2),
                     color = Color.White
                 )
 

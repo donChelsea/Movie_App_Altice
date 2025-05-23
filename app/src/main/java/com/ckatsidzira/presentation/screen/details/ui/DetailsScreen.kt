@@ -25,8 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -107,13 +107,13 @@ fun DetailsContent(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp)
+            .padding(dimensionResource(R.dimen.padding_16))
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(2f / 3f)
-                .clip(RoundedCornerShape(12.dp))
+                .clip(RoundedCornerShape(dimensionResource(R.dimen.padding_12)))
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -130,7 +130,7 @@ fun DetailsContent(
             FavoriteButton(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(12.dp),
+                    .padding(dimensionResource(R.dimen.padding_12)),
                 state = when {
                     toggling -> FavoriteState.Toggling
                     isFavorited -> FavoriteState.Favorite
@@ -145,7 +145,7 @@ fun DetailsContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16)))
 
         Text(
             text = movie.title,
@@ -153,13 +153,13 @@ fun DetailsContent(
             color = MaterialTheme.colorScheme.onBackground
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_12)))
 
         Text(
             text = movie.overview,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground,
-            lineHeight = 22.sp
+            lineHeight = dimensionResource(R.dimen.text_size_22).value.sp
         )
     }
 }

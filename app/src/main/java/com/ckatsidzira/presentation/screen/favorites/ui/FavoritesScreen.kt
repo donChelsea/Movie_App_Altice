@@ -7,10 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.ckatsidzira.R
 import com.ckatsidzira.presentation.custom.card.ListCard
 import com.ckatsidzira.presentation.model.MovieUiModel
 import com.ckatsidzira.presentation.navigation.Screen
@@ -53,7 +54,7 @@ fun FavoritesContent(
 ) {
     LazyColumn (
         modifier = modifier,
-        contentPadding = PaddingValues(4.dp)
+        contentPadding = PaddingValues(dimensionResource(R.dimen.padding_4))
     ) {
         items(
             items = favorites,

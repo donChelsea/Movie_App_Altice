@@ -19,8 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.ckatsidzira.R
 import com.ckatsidzira.domain.model.TimeWindow
 import com.ckatsidzira.presentation.util.toRegularCase
 
@@ -34,7 +35,7 @@ fun ScreenSection(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = dimensionResource(R.dimen.padding_24)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -44,7 +45,7 @@ fun ScreenSection(
             color = MaterialTheme.colorScheme.onBackground,
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16)))
 
         FilterChipGroup(
             items = listOf(
@@ -70,7 +71,7 @@ fun FilterChipGroup(
                 colors = FilterChipDefaults.filterChipColors(
                     selectedContainerColor = MaterialTheme.colorScheme.primary
                 ),
-                modifier = Modifier.padding(end = 6.dp),
+                modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_6)),
                 selected = items[defaultSelectedItemIndex] == items[index],
                 onClick = {
                     onSelectedChanged(items[index].value, index)

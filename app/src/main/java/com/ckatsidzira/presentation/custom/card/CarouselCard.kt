@@ -17,7 +17,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.ckatsidzira.BuildConfig
@@ -31,15 +30,15 @@ fun CarouselCard(
     modifier: Modifier = Modifier,
     onClick: (Int) -> Unit,
 ) {
-    val posterWidth = 140.dp
+    val posterWidth = dimensionResource(R.dimen.poster_height)
     val posterAspectRatio = 2f / 3f
     val posterHeight = posterWidth / posterAspectRatio
-    val titleHeight = 40.dp // enough space for 2 lines
+    val titleHeight = dimensionResource(R.dimen.title_text_size_40)
 
     Card(
         modifier = modifier
             .width(posterWidth)
-            .height(posterHeight + titleHeight) // total fixed height
+            .height(posterHeight + titleHeight)
             .clickable { onClick(movie.id) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = dimensionResource(R.dimen.card_elevation)
@@ -62,7 +61,10 @@ fun CarouselCard(
                 text = movie.title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                    .padding(
+                        horizontal = dimensionResource(R.dimen.padding_8),
+                        vertical = dimensionResource(R.dimen.padding_4)
+                    ),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
@@ -74,7 +76,7 @@ fun CarouselCard(
 @Composable
 @Preview
 fun PreviewCarouselCard() {
-    CarouselCard (
+    CarouselCard(
         movie = MOCK_MOVIE,
         onClick = { },
     )

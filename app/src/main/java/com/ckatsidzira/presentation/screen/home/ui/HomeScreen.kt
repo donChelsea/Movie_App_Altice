@@ -12,10 +12,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.ckatsidzira.R
 import com.ckatsidzira.presentation.custom.card.CarouselCard
 import com.ckatsidzira.presentation.custom.section.ScreenSection
 import com.ckatsidzira.presentation.custom.state.ShowError
@@ -103,17 +104,17 @@ fun HomeContent(
             onSelectedChanged = { name, id -> selectedItemIndexUpdate(name, id) }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_16)))
 
         LazyRow(
-            contentPadding = PaddingValues(4.dp)
+            contentPadding = PaddingValues(dimensionResource(R.dimen.padding_4))
         ) {
             items(
                 items = movies,
                 key = { it.id }
             ) { movie ->
                 CarouselCard(
-                    modifier = Modifier.padding(4.dp),
+                    modifier = Modifier.padding(dimensionResource(R.dimen.padding_4)),
                     movie = movie,
                     onClick = { id: Int -> goToDetails(id) }
                 )

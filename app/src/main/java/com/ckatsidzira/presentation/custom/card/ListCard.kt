@@ -26,10 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.ckatsidzira.BuildConfig
@@ -47,17 +47,20 @@ fun ListCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { onMovieClicked(movie.id) },
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            .clickable { onMovieClicked(movie.id) }
+            .padding(
+                horizontal = dimensionResource(R.dimen.padding_16),
+                vertical = dimensionResource(R.dimen.padding_8)
+            ),
+        elevation = CardDefaults.cardElevation(defaultElevation = dimensionResource(R.dimen.card_elevation)),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(dimensionResource(R.dimen.padding_12))
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min)
-                .padding(12.dp),
+                .padding(dimensionResource(R.dimen.padding_12)),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -69,15 +72,15 @@ fun ListCard(
                 contentDescription = movie.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .width(100.dp)
+                    .width(dimensionResource(R.dimen.size_100))
                     .aspectRatio(2f / 3f)
-                    .clip(RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(dimensionResource(R.dimen.padding_8)))
             )
 
             println(movie.overview)
             println(movie.title)
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(dimensionResource(R.dimen.padding_16)))
 
             Column(
                 modifier = Modifier
@@ -93,7 +96,7 @@ fun ListCard(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_4)))
 
                 Text(
                     text = movie.overview,
