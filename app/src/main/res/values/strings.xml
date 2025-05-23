@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Movie_App_Altice</string>
+    <string name="error_screen">Error loading data</string>
+    <string name="offline_screen">Please check your internet connection.</string>
 </resources>
